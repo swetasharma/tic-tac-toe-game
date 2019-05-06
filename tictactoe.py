@@ -18,6 +18,13 @@ def print_board(board):
 #code placed in try block so that we handle the errors that get raised without crashing the 
 #program.
 
+def convert_selection(selection):
+  selection -= 1
+  return (selection // 3, selection % 3)
+
+def place_piece(selection, board):
+  board[selection[0]][selection[1]] = "X"
+
 #chained comparisons are faster because the middle value only needs to be evaluated once
 # raising an error rather than returning None from a function
 def select_square():
@@ -26,13 +33,27 @@ def select_square():
     raise ValueError
   return selection
 
-board = [["_" for _ in range(3)] for _ in range(3)]
-print_board(board)
-try:
-  selection = select_square()
-except ValueError:
-  print("Sorry, please select a number 1-9")
+def main():
+  board = [["_" for _ in range(3)] for _ in range(3)]
+  while True:
+    print_board(board)
+    try:
+      selection = convert_selection(select_square())
+      place_piece(selection, board)
+    except ValueError:
+      print("Sorry, please select a number 1-9")
+    #print_board(board)
 
+#Examples:
+#1 => 0,0
+#4 => 1,0
+#8 => 2,1
+
+#Think floor division + modulo
+
+
+if __name__ == "__main__":
+  main()
 
 
 
@@ -44,7 +65,3 @@ except ValueError:
    # print(selection)
 #except ValueError:
  # print("Sorry, that's not a number")
-
-
-
-
